@@ -13,9 +13,10 @@ class MainWindow(tkinter.Tk):
     Główna klasa okna
     """
 
-    def __init__(self):
+    def __init__(self, simulator):
         super().__init__()
         self._exception_displayer = ExceptionGUIDisplayer()
+        self._simulator = simulator
 
     def create_window(self):
         """
@@ -68,6 +69,9 @@ class MainWindow(tkinter.Tk):
                 logging.debug('Zgłoszono wyjątek; nie pobrano wartości parametrów.')
             else:
                 logging.debug('Parametry: ' + parameters.__str__())
+                reset_plots_button_action()
+                self._simulator.send_information(lower_plot, upper_plot, parameters)
+                self._simulator.run_simulation()
 
         def reset_plots_button_action(*args):
             """
@@ -76,6 +80,8 @@ class MainWindow(tkinter.Tk):
             """
             upper_plot.create_new_plot_area()
             lower_plot.create_new_plot_area()
+            upper_plot.legend.clear_legend()
+            lower_plot.legend.clear_legend()
 
         # Konfigurowanie parametrów głównego okna
         self.wm_title('Symulator układu z wózkiem')

@@ -100,13 +100,14 @@ class PlotManager:
     def active_plot(self):
         """
         Zwraca wartość liczbową odpowiadającą obecnie rysowanemu numerowi wykresu.
+        Numeracja zaczyna się od zera.
         """
         return self._active_plot
 
     @active_plot.setter
     def active_plot(self, new_active_plot):
-        if type(new_active_plot) != str:
-            raise TypeError("nieprawidłowy typ danych" + new_active_plot + "; powinien być: str")
+        if type(new_active_plot) != int:
+            raise TypeError("nieprawidłowy typ danych" + new_active_plot + "; powinien być: int")
         self._active_plot = new_active_plot
 
     @property
