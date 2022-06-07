@@ -18,10 +18,37 @@ class Symulator:
 
         self._wykres_wejscia = wykres_wejscia  # Referencja do wykresu wejścia
         self._wykres_wyjscia = wykres_wyjscia  # Referencja do wykresu wyjścia
-        self._parametry = parametry  # Ten atrybut jest dosyć rozbudowany, jest klasy dict: nie chce mi się pisać
-        # dokładnie, jak wygląda jego struktura, po wpisaniu jakichś danych do tego mojego GUI i kliknięciu "URUCHOM
-        # SYMULACJĘ" do konsoli będzie wywalać jak ten obiekt wygląda w środku, zasadniczo zawiera informacje o tym,
-        # jakie opcje wybrał użytkownik
+        self._parametry = parametry  # Ten atrybut jest dosyć rozbudowany, jest klasy dict:
+        # Wewnętrzna struktura kluczy wygląda w ten sposób:
+        # 'euler': boolean, czy zaznaczona jest symulacja metodą Eulera
+        # 'runge_kutta': boolean, czy zaznaczona jest symulacja metodą RK
+        # 'signal_type': str, typ sygnału, może być 'impulse' (impuls prostokątny), 'triangle' (fala trókątna),
+        #               'sine' (sinusoida)
+        # 'signal_parameters': dict, parametry sygnału, zawartość różni się w zależności od typu sygnału
+        #                       (wszystkie dane tutaj są typu float):
+        #   'Amplituda': amplituda sygnału
+        #   'Offset' [dla typów: 'impulse', 'triangle']: o ile przesunięty jest w pionie sygnał względem zera
+        #   'Składowa stała' [dla typu: 'sine']: składowa stała sinusoidy
+        #   'Czas włączenia' [dla typu: 'impulse']: kiedy impuls prostokątny jest załączany
+        #   'Czas wyłączenia' [dla typu: 'impulse']: kiedy impuls prostokątny jest wyłączany
+        #   'Okres' [dla typów: 'triangle', 'sine']: okres sygnału
+        #   'Faza początkowa' [dla typów: 'triangle', 'sine']: faza początkowa sygnału
+        # 'model_parameters': dict z parametrami modelu, wszystkie typu float):
+        #   'Stała sprężyny (k)': stała sprężyny z rysunku
+        #   'Tłumienie (b)': stała tłumika z rysunku
+        #   'Masa (m)': masa wózka z modelu
+        # 'simulation_parameters': parametry symulacji, wszystkie typu float:
+        #   'Położenie początkowe (x0)': położenie początkowe wózka
+        #   'Prędkość początkowa (v0)': prędkość początkowa wózka
+        #   'Krok symulacji (h)': co jaki okres czasu ma być generowana kolejna porcja wyników
+        #   'Czas symulacji (ts)': czas modelowy, do którego należy prowadzić symulację
+        #
+        #   Użycie (przykładowe):
+        #   self._parametry['runge_kutta'] <- True lub False, w zależności od tego, czy użytkownik zaznaczył
+        #       kratkę przy metodzie RK
+        #   self._parametry['model_parameters']['Tłumienie (b)'] <- liczba float odpowiadająca wprowadzonemu
+        #       przez użytkownika tłumieniu do pola "tłumienie"
+
 
     def run_simulation(self):
         """
