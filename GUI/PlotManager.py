@@ -115,3 +115,10 @@ class PlotManager:
         Zwraca bezpośrednio referencję do obiektu Canvas, odpowiadającego za obsługę wykresu.
         """
         return self._canvas
+
+    @property
+    def legend(self):
+        """
+        Zwraca referencję do obiektu PlotLegend skojarzonego z danym obiektem PlotManager.
+        """
+        return self._legend
